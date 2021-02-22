@@ -33,7 +33,7 @@ namespace PaymentProject
             };
 
             var newUrl = new Uri(QueryHelpers.AddQueryString(url, param));
-            var addSessionIDToQuery = sessionID2 + "&";
+            var addSessionIDToQuery = "&"+sessionID2 + "&";
             var addCultureToQuery = culture;
             Uri completeUrl = new Uri( newUrl + addSessionIDToQuery + addCultureToQuery);
             return completeUrl;
