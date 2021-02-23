@@ -14,26 +14,15 @@ namespace PaymentProject
     {
         static void Main(string[] args)
         {
-            StringBuilder sb = new StringBuilder();
-            var uri = StringBuilder.Builder("f20f96ad-0892-4a8a-94ac-ac0580331ded", 75f);
+            
+            var uri = PaymentLink.PaymentUrlBuilder("f20f96ad-0892-4a8a-94ac-ac0580331ded", 75f);
             string url = uri.ToString();
-            var getUrl = Get(url);
+            var getUrl = PaymentLink.HttpGet(url);
 
 
 
         }
 
-        public static string Get(string uri)
-        {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
-            request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
-
-            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-            using (Stream stream = response.GetResponseStream())
-            using (StreamReader reader = new StreamReader(stream))
-            {
-                return reader.ReadToEnd();
-            }
-        }
+        
     }
 }
