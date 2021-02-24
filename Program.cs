@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.WebUtilities;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -17,12 +18,19 @@ namespace PaymentProject
             
             var uri = PaymentLink.PaymentUrlBuilder("f20f96ad-0892-4a8a-94ac-ac0580331ded", 75f);
             string url = uri.ToString();
-            var getUrl = PaymentLink.HttpGet(url);
+            var jsonUrl = PaymentLink.HttpGet(url);
 
 
 
         }
 
-        
+        public static PaymentResponse SplitJsonStringIntoClasses(string jsonString)
+        {
+            var result = JsonConvert.DeserializeObject<PaymentResponse>(jsonString);
+
+            return result;
+        }
+
+
     }
 }

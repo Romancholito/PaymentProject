@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.WebUtilities;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -51,6 +53,51 @@ namespace PaymentProject
             using (StreamReader reader = new StreamReader(stream))
             {
                 return reader.ReadToEnd();
+            }
+        }
+
+        public string  InsertCreditCardDetails(Payment paymnet)
+        {
+            IWebDriver driver = new ChromeDriver();
+            var UrlPaymentForm = paymnet.url;
+            driver.Navigate().GoToUrl(UrlPaymentForm);
+            // TODO: Insert Details into payment form
+
+
+
+
+            // driver.Submit();
+            var res = driver.Url;
+            driver.SwitchTo().Window(driver.WindowHandles.Last());
+            var resSecondPage = driver.Url;
+
+            return res;
+
+        }
+
+        public string CheckFormSuccess(string url)
+        {
+
+            if (url.Contains("success"))
+            {
+                return"Form ended seccessfuly!";
+            }
+            else
+            {
+                return "Payment Form aborted!";
+            }
+        }
+
+        public string CheckFormFailures(string url)
+        {
+
+            if (url.Contains("failure "))
+            {
+                return "Form ended seccessfuly!";
+            }
+            else
+            {
+                return "Payment Form aborted!";
             }
         }
     }

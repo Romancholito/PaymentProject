@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PaymentProject
 {
-    class Payment
+    public class Payment
     {
         public string url { get; set; }
         public string txtID { get; set; }

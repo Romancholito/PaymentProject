@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PaymentProject
 {
-    class Response
+    public class Response
     {
         public bool success { get; set; }
         public string token { get; set; }
