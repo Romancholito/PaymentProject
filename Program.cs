@@ -20,17 +20,18 @@ namespace PaymentProject
             string url = uri.ToString();
             var jsonUrl = PaymentLink.HttpGet(url);
 
+            var res = PaymentResponse.SplitJsonStringIntoClasses(jsonUrl);
+          
+            var responseRedirectUrl = PaymentLink.InsertCreditCardDetails(res);
+
+            PaymentLink.CheckFormSuccess(responseRedirectUrl);
+
+            responseRedirectUrl = PaymentLink.InsertCreditCardDetails(res);
+
+            PaymentLink.CheckFormFailure(responseRedirectUrl);
 
 
         }
-
-        public static PaymentResponse SplitJsonStringIntoClasses(string jsonString)
-        {
-            var result = JsonConvert.DeserializeObject<PaymentResponse>(jsonString);
-
-            return result;
-        }
-
 
     }
 }

@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace PaymentProject
@@ -47,7 +48,6 @@ namespace PaymentProject
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
             request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
-
             using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
             using (Stream stream = response.GetResponseStream())
             using (StreamReader reader = new StreamReader(stream))
@@ -56,28 +56,32 @@ namespace PaymentProject
             }
         }
 
-        public string  InsertCreditCardDetails(Payment paymnet)
+        public static string  InsertCreditCardDetails(PaymentResponse paymentRes)
         {
             IWebDriver driver = new ChromeDriver();
-            var UrlPaymentForm = paymnet.url;
+            var UrlPaymentForm = paymentRes.payment.url;
             driver.Navigate().GoToUrl(UrlPaymentForm);
-            // TODO: Insert Details into payment form
+            IWebElement cardNumber = driver.FindElement(By.Name("cardNumber"));
+            cardNumber.SendKeys("5105105105105100");
+            Thread.Sleep(3 * 1000);
+            IWebElement cardExpDate = driver.FindElement(By.Name("expDate"));
+            cardExpDate.SendKeys("06/26");
+            Thread.Sleep(3 * 1000);
+            IWebElement cardCvvNumber = driver.FindElement(By.Id("cvv"));
+            cardCvvNumber.SendKeys("123");
+            Thread.Sleep(3 * 1000);
+            IWebElement cardPersonalIdNumber = driver.FindElement(By.Id("personalId"));
+            cardPersonalIdNumber.SendKeys("300055555");
+            Thread.Sleep(3 * 1000);
+            IWebElement creditCardForm = driver.FindElement(By.Id("creditForm"));
+            creditCardForm.Submit();
 
-
-
-
-            // driver.Submit();
-            var res = driver.Url;
-            driver.SwitchTo().Window(driver.WindowHandles.Last());
-            var resSecondPage = driver.Url;
-
-            return res;
-
+            var responseFromRedirectPage = driver.Url;
+            return responseFromRedirectPage;
         }
 
-        public string CheckFormSuccess(string url)
+        public static string CheckFormSuccess(string url)
         {
-
             if (url.Contains("success"))
             {
                 return"Form ended seccessfuly!";
@@ -88,16 +92,15 @@ namespace PaymentProject
             }
         }
 
-        public string CheckFormFailures(string url)
+        public static string CheckFormFailure(string url)
         {
-
-            if (url.Contains("failure "))
+            if (url.Contains("failure"))
             {
-                return "Form ended seccessfuly!";
+                return "Form ended with a fail process!";
             }
             else
             {
-                return "Payment Form aborted!";
+                return "Payment Form ended with a problem!";
             }
         }
     }

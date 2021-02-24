@@ -24,3 +24,5 @@ C:\Users\Lenovo\Documents\GitHub\PaymentProject\bin\Debug\WebDriver.xml
 C:\Users\Lenovo\Documents\GitHub\PaymentProject\obj\Debug\PaymentProject.csproj.CopyComplete
 C:\Users\Lenovo\Documents\GitHub\PaymentProject\obj\Debug\PaymentProject.exe
 C:\Users\Lenovo\Documents\GitHub\PaymentProject\obj\Debug\PaymentProject.pdb
+C:\Users\Lenovo\Documents\GitHub\PaymentProject\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Lenovo\Documents\GitHub\PaymentProject\bin\Debug\Newtonsoft.Json.xml
