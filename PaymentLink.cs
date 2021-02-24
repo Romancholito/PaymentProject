@@ -56,9 +56,8 @@ namespace PaymentProject
             }
         }
 
-        public static string  InsertCreditCardDetails(PaymentResponse paymentRes)
+        public static string  InsertCreditCardDetails(PaymentResponse paymentRes,string id,IWebDriver driver)
         {
-            IWebDriver driver = new ChromeDriver();
             var UrlPaymentForm = paymentRes.payment.url;
             driver.Navigate().GoToUrl(UrlPaymentForm);
             IWebElement cardNumber = driver.FindElement(By.Name("cardNumber"));
@@ -71,7 +70,7 @@ namespace PaymentProject
             cardCvvNumber.SendKeys("123");
             Thread.Sleep(3 * 1000);
             IWebElement cardPersonalIdNumber = driver.FindElement(By.Id("personalId"));
-            cardPersonalIdNumber.SendKeys("300055555");
+            cardPersonalIdNumber.SendKeys(id);
             Thread.Sleep(3 * 1000);
             IWebElement creditCardForm = driver.FindElement(By.Id("creditForm"));
             creditCardForm.Submit();
@@ -80,27 +79,28 @@ namespace PaymentProject
             return responseFromRedirectPage;
         }
 
-        public static string CheckFormSuccess(string url)
+        public static bool CheckFormSuccess(string url)
         {
             if (url.Contains("success"))
             {
-                return"Form ended seccessfuly!";
+                return true;
+               
             }
             else
             {
-                return "Payment Form aborted!";
+                return false;
             }
         }
 
-        public static string CheckFormFailure(string url)
+        public static bool CheckFormFailure(string url)
         {
             if (url.Contains("failure"))
             {
-                return "Form ended with a fail process!";
+                return true;
             }
             else
             {
-                return "Payment Form ended with a problem!";
+                return true;
             }
         }
     }
